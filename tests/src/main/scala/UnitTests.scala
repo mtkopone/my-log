@@ -1,10 +1,10 @@
-package mtk.rlog.tests 
+package mtk.mylog.tests 
 
 import junit.framework.Assert._
 import _root_.android.test.AndroidTestCase
 
 class UnitTests extends AndroidTestCase {
   def testPackageIsCorrect {      
-    assertEquals("mtk.rlog", getContext.getPackageName)
+    assertEquals("mtk.mylog", getContext.getPackageName)
   }
 }

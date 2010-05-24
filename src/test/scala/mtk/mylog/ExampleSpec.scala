@@ -1,4 +1,4 @@
-package mtk.rlog
+package mtk.mylog
 
 import org.scalatest.Spec
 import org.scalatest.matchers.{MustMatchers, ShouldMatchers}

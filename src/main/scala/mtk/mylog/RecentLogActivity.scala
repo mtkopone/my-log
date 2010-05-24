@@ -1,4 +1,4 @@
-package mtk.rlog
+package mtk.mylog
  
 import android.os.Bundle
 import android.app.ListActivity
