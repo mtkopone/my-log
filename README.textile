@@ -9,7 +9,7 @@ h2. μLog: Call Log / Favorites substitute for Android 2.1+
 ** You have sent an SMS to
 * Ordered latest first
 * No duplicates
-* Direct links call and messaging 
+* Direct links for calling and sending SM's 
 
 h3. Requirements
 
