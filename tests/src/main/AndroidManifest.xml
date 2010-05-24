@@ -1,0 +1,9 @@
+<manifest package="mtk.rlog.tests" xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-sdk android:minSdkVersion="4"></uses-sdk>
+    <application>
+        <uses-library android:name="android.test.runner"></uses-library>
+    </application>
+    <instrumentation 
+    android:label="Tests" android:targetPackage="mtk.rlog" android:name="android.test.InstrumentationTestRunner">
+</instrumentation>
+</manifest>
