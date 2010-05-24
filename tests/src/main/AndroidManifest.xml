@@ -4,6 +4,7 @@
         <uses-library android:name="android.test.runner"></uses-library>
     </application>
     <instrumentation 
-    android:label="Tests" android:targetPackage="mtk.rlog" android:name="android.test.InstrumentationTestRunner">
-</instrumentation>
+			  android:label="Tests" android:targetPackage="mtk.mylog"
+			  android:name="android.test.InstrumentationTestRunner">
+	  </instrumentation>
 </manifest>
