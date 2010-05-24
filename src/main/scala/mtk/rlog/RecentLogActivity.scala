@@ -23,13 +23,6 @@ class RecentLogActivity extends ListActivity {
     setListAdapter(new ItemAdapter(reload))
   }
 
-  case class ContactInfo(number: String, name: String, date: Long) {
-    def formattedNumber = PhoneNumberUtils.formatNumber(number)
-    def formattedDate = DateUtils.getRelativeTimeSpanString(date, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
-    def header = if (TextUtils.isEmpty(name)) formattedNumber else name
-    def extra = formattedDate + (if (TextUtils.isEmpty(name)) "" else "  "+formattedNumber)
-  }
-
   private def reload = {
     val smss = managedQuery(Uri.parse("content://sms"), Array("address", "date"), "type < 3", null, "date DESC")
     val calls = managedQuery(Calls.CONTENT_URI, Array(Calls.NUMBER, Calls.CACHED_NAME, Calls.DATE), null, null, Calls.DEFAULT_SORT_ORDER)
@@ -132,5 +125,12 @@ class RecentLogActivity extends ListActivity {
 
   object CallOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", num, null)))
   object SmsOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", num, null)))
+
+  case class ContactInfo(number: String, name: String, date: Long) {
+    def formattedNumber = PhoneNumberUtils.formatNumber(number)
+    def formattedDate = DateUtils.getRelativeTimeSpanString(date, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
+    def header = if (TextUtils.isEmpty(name)) formattedNumber else name
+    def extra = formattedDate + (if (TextUtils.isEmpty(name)) "" else "  "+formattedNumber)
+  }
 
 }
