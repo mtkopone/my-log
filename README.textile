@@ -1,0 +1,34 @@
+h2. μLog: Call Log / Favorites substitute for Android 2.1+
+
+!http://github.com/mtkopone/my-log/raw/master/doc/example-screenshot.png!
+
+* Shows contacts who
+** You've called
+** Have called you
+** Have sent you an SMS
+** You have sent an SMS to
+* Ordered latest first
+* No duplicates
+* Direct links call and messaging 
+
+h3. Requirements
+
+* JDK 1.6
+* sbt 0.7.2+
+* Android SDK with platform API level 7+
+
+h3. Setup
+
+bq. export ANDROID_SDK_HOME=/path/to/android-sdk
+
+bq. sbt update
+
+h3. Test
+
+bq. $ANDROID_SDK_HOME/tools/emulator @myEmulator
+
+bq. sbt reinstall-emulator
+
+h3. Use
+
+bq. sbt reinstall-device
