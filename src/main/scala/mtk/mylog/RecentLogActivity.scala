@@ -31,7 +31,7 @@ class RecentLogActivity extends ListActivity {
     def load(acc: List[ContactInfo]): List[ContactInfo] = {
       if (acc.size < maxItems) {
         loader.next match {
-          case Some(next) => if (acc.exists(_.number == next.number)) load(acc) else load(next :: acc)
+          case Some(next) => if (acc.exists(_.isSameContact(next))) load(acc) else load(next :: acc)
           case None => acc
         }
       } else {
@@ -82,21 +82,24 @@ class RecentLogActivity extends ListActivity {
   
   private def smsCursorToContactInfo(c: Cursor) = {
     val number = c.getString(0)
-    ContactInfo(number, lookupDisplayName(number).getOrElse(null), c.getLong(1))
-  }
-  private def callCursorToContactInfo(c: Cursor) = {
-    ContactInfo(c.getString(0), c.getString(1), c.getLong(2))
+    ContactInfo(number, lookupName(number), c.getLong(1))
   }
 
-  private def lookupDisplayName(phoneNumber: String): Option[String] = {
+  private def callCursorToContactInfo(c: Cursor) = {
+    ContactInfo(c.getString(0), stringOption(c.getString(1)), c.getLong(2))
+  }
+
+  private def lookupName(phoneNumber: String): Option[String] = {
     val lookupUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber))
     val cursor = managedQuery(lookupUri, Array("display_name"), null, null, null)
     if (cursor.moveToFirst) {
-      Some(cursor.getString(0))
+      stringOption(cursor.getString(0))
     } else {
       None
     }
   }
+
+  private def stringOption(s: String) = if (TextUtils.isEmpty(s)) None else Some(s)
 
   class ItemAdapter(list: List[ContactInfo]) extends ArrayAdapter[ContactInfo](this, R.layout.item, R.id.line1, list.toArray) {
 
@@ -126,11 +129,15 @@ class RecentLogActivity extends ListActivity {
   object CallOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", num, null)))
   object SmsOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", num, null)))
 
-  case class ContactInfo(number: String, name: String, date: Long) {
+  case class ContactInfo(number: String, name: Option[String], date: Long) {
     def formattedNumber = PhoneNumberUtils.formatNumber(number)
     def formattedDate = DateUtils.getRelativeTimeSpanString(date, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
-    def header = if (TextUtils.isEmpty(name)) formattedNumber else name
-    def extra = formattedDate + (if (TextUtils.isEmpty(name)) "" else "  "+formattedNumber)
+    def header = name.getOrElse(formattedNumber)
+    def extra = if (name.isDefined) formattedNumber else ""
+
+    def isSameContact(o: ContactInfo) = {
+      if (name.isDefined) name == o.name else number == o.number
+    }
   }
 
 }
