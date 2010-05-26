@@ -133,7 +133,7 @@ class RecentLogActivity extends ListActivity {
     def formattedNumber = PhoneNumberUtils.formatNumber(number)
     def formattedDate = DateUtils.getRelativeTimeSpanString(date, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
     def header = name.getOrElse(formattedNumber)
-    def extra = if (name.isDefined) formattedNumber else ""
+    def extra = formattedDate + (if (name.isDefined) "  "+formattedNumber else "")
 
     def isSameContact(o: ContactInfo) = {
       if (name.isDefined) name == o.name else number == o.number
