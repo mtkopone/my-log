@@ -13,14 +13,19 @@ public final class R {
     public static final class drawable {
         public static final int action_sms=0x7f020000;
         public static final int divider=0x7f020001;
+        public static final int my_icon=0x7f020002;
     }
     public static final class id {
-        public static final int call_icon=0x7f050002;
-        public static final int divider1=0x7f050001;
-        public static final int divider2=0x7f050003;
-        public static final int line1=0x7f050004;
-        public static final int line2=0x7f050005;
-        public static final int sms_icon=0x7f050000;
+        public static final int call_box=0x7f050004;
+        public static final int call_icon=0x7f050006;
+        public static final int div1=0x7f050001;
+        public static final int div2=0x7f050005;
+        public static final int latest_was_call=0x7f050007;
+        public static final int latest_was_sms=0x7f050003;
+        public static final int line1=0x7f050008;
+        public static final int line2=0x7f050009;
+        public static final int sms_box=0x7f050000;
+        public static final int sms_icon=0x7f050002;
     }
     public static final class layout {
         public static final int item=0x7f030000;

@@ -82,11 +82,11 @@ class RecentLogActivity extends ListActivity {
   
   private def smsCursorToContactInfo(c: Cursor) = {
     val number = c.getString(0)
-    ContactInfo(number, lookupName(number), c.getLong(1))
+    ContactInfo(number, lookupName(number), c.getLong(1), true)
   }
 
   private def callCursorToContactInfo(c: Cursor) = {
-    ContactInfo(c.getString(0), stringOption(c.getString(1)), c.getLong(2))
+    ContactInfo(c.getString(0), stringOption(c.getString(1)), c.getLong(2), false)
   }
 
   private def lookupName(phoneNumber: String): Option[String] = {
@@ -104,17 +104,21 @@ class RecentLogActivity extends ListActivity {
   class ItemAdapter(list: List[ContactInfo]) extends ArrayAdapter[ContactInfo](this, R.layout.item, R.id.line1, list.toArray) {
 
     override def getView(position: Int, convertView: View, parent: ViewGroup) = {
-      val view = if (convertView == null) getLayoutInflater.inflate(R.layout.item, null) else convertView
+      val v = if (convertView != null) convertView else getLayoutInflater.inflate(R.layout.item, null)
       val info = getItem(position)
-      view.findViewById(R.id.line1).asInstanceOf[TextView].setText(info.header)
-      view.findViewById(R.id.line2).asInstanceOf[TextView].setText(info.extra)
-      val callIcon = view.findViewById(R.id.call_icon)
-      callIcon.setOnClickListener(CallOnClick)
-      callIcon.setTag(info.number)
-      val smsIcon = view.findViewById(R.id.sms_icon)
-      smsIcon.setOnClickListener(SmsOnClick)
-      smsIcon.setTag(info.number)
-      view
+      v.findViewById(R.id.line1).asInstanceOf[TextView].setText(info.header)
+      v.findViewById(R.id.line2).asInstanceOf[TextView].setText(info.extra)
+      v.findViewById(R.id.latest_was_call).setVisibility(if (info.sms) View.INVISIBLE else View.VISIBLE)
+      v.findViewById(R.id.latest_was_sms).setVisibility(if (info.sms) View.VISIBLE else View.INVISIBLE)
+      setClick(v, if (info.sms) SmsOnClick else CallOnClick, info.number)
+      setClick(v.findViewById(R.id.call_icon), CallOnClick, info.number)
+      setClick(v.findViewById(R.id.sms_icon), SmsOnClick, info.number)
+      v
+    }
+
+    private def setClick(view: View, listener: OnClickListener, number: String) {
+      view.setOnClickListener(listener)
+      view.setTag(number)
     }
   }
 
@@ -129,7 +133,7 @@ class RecentLogActivity extends ListActivity {
   object CallOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", num, null)))
   object SmsOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", num, null)))
 
-  case class ContactInfo(number: String, name: Option[String], date: Long) {
+  case class ContactInfo(number: String, name: Option[String], date: Long, sms: Boolean) {
     def formattedNumber = PhoneNumberUtils.formatNumber(number)
     def formattedDate = DateUtils.getRelativeTimeSpanString(date, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE)
     def header = name.getOrElse(formattedNumber)

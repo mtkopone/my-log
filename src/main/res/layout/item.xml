@@ -1,77 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip">
 
-    <ImageView android:id="@+id/sms_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_centerVertical="true"
+    <LinearLayout android:id="@+id/sms_box"
         android:layout_alignParentRight="true"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:gravity="center_vertical"
-        android:src="@drawable/action_sms"
-        android:background="@android:drawable/list_selector_background"
-    />
-
-    <View android:id="@+id/divider1"
-        android:layout_width="1px"
-        android:layout_height="40dip"
-        android:layout_marginTop="5dip"
-        android:layout_marginBottom="5dip"
-        android:layout_toLeftOf="@id/sms_icon"
-        android:background="@drawable/divider"
-    />
-
-    <ImageView android:id="@+id/call_icon"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_toLeftOf="@id/divider1"
-        android:layout_centerVertical="true"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip"
-        android:gravity="center_vertical"
-        android:src="@android:drawable/sym_action_call"
-    />
+        android:orientation="horizontal">
 
+        <View android:id="@+id/div1"
+            android:background="@drawable/divider"
+            android:layout_margin="3dip"
+            android:layout_height="fill_parent"
+            android:layout_width="1px"/>
 
-    <View android:id="@+id/divider2"
-        android:layout_width="1px"
-        android:layout_height="40dip"
-        android:layout_marginTop="5dip"
-        android:layout_marginBottom="5dip"
-        android:layout_toLeftOf="@id/call_icon"
-        android:layout_marginLeft="11dip"
-        android:background="@drawable/divider"
-    />
+        <LinearLayout android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <ImageView android:id="@+id/sms_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:src="@drawable/action_sms"
+            />
+            <View android:id="@+id/latest_was_sms"
+                android:background="@drawable/divider"
+                android:layout_marginTop="2dip"
+                android:layout_marginBottom="2dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/call_box"
+        android:layout_toLeftOf="@id/sms_box"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
+
+        <View android:id="@+id/div2"
+            android:background="@drawable/divider"
+            android:layout_margin="3dip"
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"/>
+        <LinearLayout android:id="@android:id/empty"
+            android:layout_toLeftOf="@id/sms_box"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <ImageView android:id="@+id/call_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:src="@android:drawable/sym_action_call"
+            />
+            <View android:id="@+id/latest_was_call"
+                android:background="@drawable/divider"
+                android:color="#f00"
+                android:layout_marginTop="2dip"
+                android:layout_marginBottom="2dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView android:id="@+id/line1"
-        android:text="Mikko Koponen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/call_box"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/divider2"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:gravity="center_vertical"
-    />
+        android:text="George Kingfish Stevens"/>
 
     <TextView android:id="@+id/line2"
-        android:text="some phone number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/divider2"
+        android:layout_toLeftOf="@id/call_box"
         android:layout_below="@id/line1"
+        android:layout_alignParentLeft="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:singleLine="true"
         android:ellipsize="marquee"
-    />
-    
-
+        android:text="7 hours ago"/>
 </RelativeLayout>
