@@ -1,5 +1,7 @@
 h2. μLog: Call Log / Favorites substitute for Android 2.1+
 
+h1. Now available on the Android Market, search for e.g. "log" 
+
 !http://github.com/mtkopone/my-log/raw/master/doc/screenshot2.png!
 
 * Shows contacts who
