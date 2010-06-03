@@ -1,6 +1,6 @@
 h2. μLog: Call Log / Favorites substitute for Android 2.1+
 
-!http://github.com/mtkopone/my-log/raw/master/doc/example-screenshot.png!
+!http://github.com/mtkopone/my-log/raw/master/doc/screenshot2.png!
 
 * Shows contacts who
 ** You've called
