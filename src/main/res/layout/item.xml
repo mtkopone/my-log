@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dip"
                 android:src="@drawable/action_sms"
+                android:background="@drawable/icon_background"
             />
             <View android:id="@+id/latest_was_sms"
                 android:background="@drawable/divider"
@@ -61,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dip"
                 android:src="@android:drawable/sym_action_call"
+                android:background="@drawable/icon_background"
             />
             <View android:id="@+id/latest_was_call"
                 android:background="@drawable/divider"

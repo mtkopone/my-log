@@ -8,11 +8,11 @@ import android.view.View.OnClickListener
 import android.net.Uri
 import android.content.Intent
 import android.text.TextUtils
-import android.widget.{ArrayAdapter, TextView}
 import android.view.{ViewGroup, View}
 import android.telephony.PhoneNumberUtils
 import android.provider.ContactsContract.PhoneLookup
 import android.text.format.DateUtils
+import android.widget.{ListView, ArrayAdapter, TextView}
 
 class RecentLogActivity extends ListActivity {
   val maxItems = 20
@@ -21,6 +21,10 @@ class RecentLogActivity extends ListActivity {
     super.onCreate(state)
     setContentView(R.layout.list)
     setListAdapter(new ItemAdapter(reload))
+  }
+
+  override def onListItemClick(listView: ListView, view: View, position: Int, id: Long) = {
+    CallOnClick.onClick(view)
   }
 
   private def reload = {
@@ -110,7 +114,7 @@ class RecentLogActivity extends ListActivity {
       v.findViewById(R.id.line2).asInstanceOf[TextView].setText(info.extra)
       v.findViewById(R.id.latest_was_call).setVisibility(if (info.sms) View.INVISIBLE else View.VISIBLE)
       v.findViewById(R.id.latest_was_sms).setVisibility(if (info.sms) View.VISIBLE else View.INVISIBLE)
-      setClick(v, if (info.sms) SmsOnClick else CallOnClick, info.number)
+      v.setTag(info.number)
       setClick(v.findViewById(R.id.call_icon), CallOnClick, info.number)
       setClick(v.findViewById(R.id.sms_icon), SmsOnClick, info.number)
       v
