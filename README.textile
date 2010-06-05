@@ -19,7 +19,8 @@ Having gotten used to Nokia UI's, my first instinct when calling someone was to 
 
 The call log in my Nexus One didn't really fill that requirement since it took 2 clicks to get there and it was an actual _log_ of each call.
 
-And I wanted to see how easy it would be to write for Android using "Scala":http://www.scala-lang.org/ . It was.
+And I wanted to see if it was easy to write for Android using "Scala":http://www.scala-lang.org/
+It was.
 
 h3. Development Requirements
 
