@@ -1,23 +1,31 @@
 h2. μLog: Call Log / Favorites substitute for Android 2.1+
 
-h1. Now available on the Android Market, search for e.g. "log" 
+h1. Now available on the Android Market, search for e.g. "mylog"
 
 !http://github.com/mtkopone/my-log/raw/master/doc/screenshot2.png!
 
-* Shows contacts who
+* Shows a list of contacts who 
 ** You've called
 ** Have called you
 ** Have sent you an SMS
 ** You have sent an SMS to
-* Ordered latest first
-* No duplicates
-* Direct links for calling and sending SM's 
+* This list is ordered latest communication first
+* A single phone number or contact is only listed once, according to the most recent communication
+* Each line includes direct links for calling and messaging.
 
-h3. Requirements
+h3. Motivation
+
+Having gotten used to Nokia UI's, my first instinct when calling someone was to "push the green button", and then select the contact or phone number from the list. 
+
+The call log in my Nexus One didn't really fill that requirement since it took 2 clicks to get there and it was an actual _log_ of each call.
+
+And I wanted to see how easy it would be to write for Android using Scala:http://www.scala-lang.org/ . It was.
+
+h3. Development Requirements
 
 * JDK 1.6
 * sbt 0.7.2+
-* Android SDK with platform API level 7+
+* Android SDK with platform API level 5+
 
 h3. Setup
 
