@@ -1,8 +1,7 @@
 import sbt._
 
 trait Defaults {
-  //def androidPlatformName = "android-1.6"
-	def androidPlatformName = "android-7"
+	def androidPlatformName = "android-5" // Android 2.0
 }
 class MyLogProject(info: ProjectInfo) extends ParentProject(info) {
   override def shouldCheckOutputDirectories = false
