@@ -6,16 +6,32 @@ import android.provider.CallLog.Calls
 import android.database.Cursor
 import android.view.View.OnClickListener
 import android.net.Uri
-import android.content.Intent
 import android.text.TextUtils
 import android.view.{ViewGroup, View}
-import android.telephony.PhoneNumberUtils
 import android.provider.ContactsContract.PhoneLookup
 import android.text.format.DateUtils
 import android.widget.{ListView, ArrayAdapter, TextView}
+import android.content._
+import android.telephony.{SmsMessage, PhoneNumberUtils}
 
 class RecentLogActivity extends ListActivity {
   val maxItems = 20
+  val receiver = new Updater
+  val smsfilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED")
+
+  class Updater extends BroadcastReceiver {
+    override def onReceive(context: Context, intent: Intent){
+      val contactInfo: ContactInfo = convert(intent)
+      setListAdapter(new ItemAdapter(reload(List(contactInfo))))
+      //presume this is run in an even handler thread, not allowed to call View.invalidate()
+      getListView.postInvalidate
+    }
+  }
+
+  private def convert(intent: Intent) = {
+    val msg = SmsMessage.createFromPdu(intent.getExtras.get("pdus").asInstanceOf[Array[Object]](0).asInstanceOf[Array[Byte]])
+    new ContactInfo(msg.getOriginatingAddress,lookupName(msg.getOriginatingAddress),msg.getTimestampMillis,true)
+  }
 
   override def onCreate(state: Bundle) {
     super.onCreate(state)
@@ -24,14 +40,20 @@ class RecentLogActivity extends ListActivity {
 
   override def onResume() {
     super.onResume
-    setListAdapter(new ItemAdapter(reload))
+    setListAdapter(new ItemAdapter(reload(List())))
+    registerReceiver(receiver, smsfilter)
+  }
+
+  override def onPause(){
+    unregisterReceiver(receiver);
+    super.onPause
   }
 
   override def onListItemClick(listView: ListView, view: View, position: Int, id: Long) = {
     CallOnClick.onClick(view)
   }
 
-  private def reload = {
+  private def reload(pre: List[ContactInfo]) = {
     val smss = managedQuery(Uri.parse("content://sms"), Array("address", "date"), "type < 3", null, "date DESC")
     val calls = managedQuery(Calls.CONTENT_URI, Array(Calls.NUMBER, Calls.CACHED_NAME, Calls.DATE), null, null, Calls.DEFAULT_SORT_ORDER)
     val loader = new DateOrderedMixedCursor(calls, smss)
@@ -39,14 +61,14 @@ class RecentLogActivity extends ListActivity {
     def load(acc: List[ContactInfo]): List[ContactInfo] = {
       if (acc.size < maxItems) {
         loader.next match {
-          case Some(next) => if (acc.exists(_.isSameContact(next))) load(acc) else load(next :: acc)
+          case Some(next) => if (acc.exists(_.isSameContact(next))) load(acc) else load(acc ::: List(next))
           case None => acc
         }
       } else {
         acc
       }
     }
-    load(List()).reverse
+    load(pre)
   }
 
   class DateOrderedMixedCursor(calls: Cursor, sms: Cursor) {
