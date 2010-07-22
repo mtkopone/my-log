@@ -20,6 +20,10 @@ class RecentLogActivity extends ListActivity {
   override def onCreate(state: Bundle) {
     super.onCreate(state)
     setContentView(R.layout.list)
+  }
+
+  override def onResume() {
+    super.onResume
     setListAdapter(new ItemAdapter(reload))
   }
 
