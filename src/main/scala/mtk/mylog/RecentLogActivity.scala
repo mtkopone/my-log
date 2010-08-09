@@ -21,16 +21,17 @@ class RecentLogActivity extends ListActivity {
 
   class Updater extends BroadcastReceiver {
     override def onReceive(context: Context, intent: Intent){
-      val contactInfo: ContactInfo = convert(intent)
+      val contactInfo = contactInfoFromSmsIntent(intent)
       setListAdapter(new ItemAdapter(reload(List(contactInfo))))
       //presume this is run in an even handler thread, not allowed to call View.invalidate()
       getListView.postInvalidate
     }
   }
 
-  private def convert(intent: Intent) = {
+  private def contactInfoFromSmsIntent(intent: Intent) = {
     val msg = SmsMessage.createFromPdu(intent.getExtras.get("pdus").asInstanceOf[Array[Object]](0).asInstanceOf[Array[Byte]])
-    new ContactInfo(msg.getOriginatingAddress,lookupName(msg.getOriginatingAddress),msg.getTimestampMillis,true)
+    val source = msg.getOriginatingAddress
+    new ContactInfo(source,lookupName(source),msg.getTimestampMillis,true)
   }
 
   override def onCreate(state: Bundle) {
@@ -122,7 +123,7 @@ class RecentLogActivity extends ListActivity {
   private def lookupName(phoneNumber: String): Option[String] = {
     val lookupUri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber))
     val cursor = managedQuery(lookupUri, Array("display_name"), null, null, null)
-    if (cursor.moveToFirst) {
+    if (cursor != null && cursor.moveToFirst) {
       stringOption(cursor.getString(0))
     } else {
       None
