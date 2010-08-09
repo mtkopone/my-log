@@ -13,6 +13,13 @@ h1. Now available on the Android Market, search for e.g. "mylog"
 * A single phone number or contact is only listed once, according to the most recent communication
 * Each line includes direct links for calling and messaging.
 
+h3. Changes
+
+|^{padding-right: 50px}. *0.6* | Update UI when mylog is open and an SMS is received - thx to "aok":http://github.com/aok for the patch
+Fix nullpointer on some devices, where apparently contact info can't be found. |
+|^{padding-right: 50px}. *0.5* | Enable calling by clicking hardware button. |
+|^{padding-right: 50px}. *0.4* | First market release. |
+
 h3. Motivation
 
 Having gotten used to Nokia UI's, my first instinct when calling someone was to "push the green button", and then select the contact or phone number from the list. 
