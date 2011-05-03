@@ -3,6 +3,7 @@ package mtk.mylog
 import android.os.Bundle
 import android.app.ListActivity
 import android.provider.CallLog.Calls
+import android.provider.ContactsContract
 import android.database.Cursor
 import android.view.View.OnClickListener
 import android.net.Uri
@@ -51,7 +52,7 @@ class RecentLogActivity extends ListActivity {
   }
 
   override def onListItemClick(listView: ListView, view: View, position: Int, id: Long) = {
-    CallOnClick.onClick(view)
+    ShowContactOnClick.onClick(view)
   }
 
   private def reload(pre: List[ContactInfo]) = {
@@ -163,6 +164,7 @@ class RecentLogActivity extends ListActivity {
 
   object CallOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", num, null)))
   object SmsOnClick extends ContactOnClick(num => new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", num, null)))
+  object ShowContactOnClick extends ContactOnClick(num => new Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT, Uri.fromParts("tel", num, null)))
 
   case class ContactInfo(number: String, name: Option[String], date: Long, sms: Boolean) {
     def formattedNumber = PhoneNumberUtils.formatNumber(number)

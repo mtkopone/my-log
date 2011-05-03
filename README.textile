@@ -15,6 +15,7 @@ h1. Now available on the Android Market, search for e.g. "mylog"
 
 h3. Changes
 
+|^{padding-right: 50px}. *0.7* | Launch contact view when clocking on name or number |
 |^{padding-right: 50px}. *0.6* | Update UI when mylog is open and an SMS is received - thx to "aok":http://github.com/aok for the patch
 Fix nullpointer on some devices, where apparently contact info can't be found. |
 |^{padding-right: 50px}. *0.5* | Enable calling by clicking hardware button. |
@@ -32,8 +33,9 @@ It was.
 h3. Development Requirements
 
 * JDK 1.6
-* sbt 0.7.2+
-* Android SDK with platform API level 5+
+* sbt 0.7.5+
+* Android SDK with platform API level 7+
+** use "homebrew":https://github.com/mxcl/homebrew to install
 
 h3. Setup
 
