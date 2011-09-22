@@ -15,10 +15,11 @@ h1. Now available on the Android Market, search for e.g. "mylog"
 
 h3. Changes
 
-|^{padding-right: 50px}. *0.6* | Update UI when mylog is open and an SMS is received - thx to "aok":http://github.com/aok for the patch
+|^{padding-right: 50px}. *0.7* | Dependency updates: scala 2.7.7 => 2.9.1 and sbt 0.7.7 => 0.10.1 |
+|^{padding-right: 50px}. 0.6 | Update UI when mylog is open and an SMS is received - thx to "aok":http://github.com/aok for the patch
 Fix nullpointer on some devices, where apparently contact info can't be found. |
-|^{padding-right: 50px}. *0.5* | Enable calling by clicking hardware button. |
-|^{padding-right: 50px}. *0.4* | First market release. |
+|^{padding-right: 50px}. 0.5 | Enable calling by clicking hardware button. |
+|^{padding-right: 50px}. 0.4 | First market release. |
 
 h3. Motivation
 
@@ -32,21 +33,23 @@ It was.
 h3. Development Requirements
 
 * JDK 1.6
-* sbt 0.7.2+
-* Android SDK with platform API level 5+
+* sbt 0.10+
+* Android SDK with platform API level 7+
 
 h3. Setup
 
-bq. export ANDROID_SDK_HOME=/path/to/android-sdk
+bq. Install everything from java to git to android-tools to xsbt
 
-bq. sbt update
+bq. export ANDROID_HOME=/path/to/android-sdk
 
-h3. Test
+bq. xsbt update
 
-bq. $ANDROID_SDK_HOME/tools/emulator @myEmulator
+h3. Try it Out in the Emulator
 
-bq. sbt reinstall-emulator
+bq. $ANDROID_HOME/tools/emulator @myEmulator
+
+bq. xsbt android:package-debug android:install-emulator
 
 h3. Use
 
-bq. sbt reinstall-device
+bq. xsbt android:install-device
