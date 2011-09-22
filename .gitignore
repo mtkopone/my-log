@@ -10,3 +10,8 @@ project/plugins/project
 project/plugins/src_managed
 target
 tests/target
+.classpath
+.project
+.scala_dependencies
+.settings
+default.properties
